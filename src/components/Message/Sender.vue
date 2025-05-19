@@ -1,8 +1,7 @@
 <template>
   <div class="sender">
     <div class="avatar">
-      <t-avatar class="avatar-example" image="https://tdesign.gtimg.com/mobile/demos/avatar1.png"
-        size="65px"></t-avatar>
+      <t-avatar class="avatar-example" :image="props.avatar" size="65px"></t-avatar>
     </div>
     <div class="info">
       <div class="name">
@@ -14,7 +13,9 @@
     </div>
     <div class="state">
       <span>{{ props.time }}</span>
-      <t-badge :count="props.unread"></t-badge>
+      <div style="display:flex; width: 100%; justify-content: end;">
+        <t-badge :count="props.unread"></t-badge>
+      </div>
     </div>
   </div>
 </template>
