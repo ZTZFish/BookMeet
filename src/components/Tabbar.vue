@@ -1,5 +1,5 @@
 <template>
-  <t-tab-bar v-model="value" :split="false">
+  <t-tab-bar v-model="currentValue" :split="true" default-value="index" @change="toPage">
     <t-tab-bar-item v-for="item in list" :key="item.name" :value="item.name">
       {{ item.text }}
       <template #icon>
@@ -10,15 +10,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Icon as TIcon } from 'tdesign-icons-vue-next';
+import { useRoute } from 'vue-router';
 
-const value = ref('label_1');
+const route = useRoute(); // 获取当前路由信息
+
+const currentValue = ref('index');
 const list = ref([
-  { name: 'label_1', text: '首页', icon: 'home' },
-  { name: 'label_2', text: '图书', icon: 'book', },
-  { name: 'label_3', text: '购物车', icon: 'cart', },
-  { name: 'label_4', text: '聊天', icon: 'chat', },
-  { name: 'label_5', text: '我的', icon: 'user', }
+  { name: 'index', text: '首页', icon: 'home' },
+  { name: 'book', text: '图书', icon: 'book', },
+  { name: 'message', text: '消息', icon: 'chat', },
+  { name: 'shoppingCard', text: '购物车', icon: 'cart', },
+  { name: 'user', text: '我的', icon: 'user', }
 ]);
+
+const emit = defineEmits(['changePage']);
+const pageName = ref('index');
+const toPage = (newName: string) => {
+  console.log("触发了change事件，", newName);
+  pageName.value = newName;
+  emit('changePage', pageName.value);
+};
+
+
+// 监听路由变化，同步更新 Tabbar 的选中状态
+watch(
+  () => route.name,
+  (routeName) => {
+    if (routeName && list.value.some(item => item.name === routeName)) {
+      currentValue.value = routeName as string;
+    }
+  },
+  { immediate: true } // 立即执行一次，确保初始状态正确
+);
 </script>

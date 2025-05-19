@@ -1,6 +1,7 @@
 <template>
   <div class="card">
-    <slot />
+    <slot name="bookImage" />
+    <slot name="infoBody" />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import { ref } from 'vue';
 <style scoped>
 .card {
   width: 100%;
+  height: 340px;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);

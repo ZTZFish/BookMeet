@@ -1,17 +1,9 @@
 <template>
   <div class="demo-tab-bar">
     <t-tabs default-value="first">
-      <t-tab-panel value="first" label="选项" :icon="appIcon" />
-      <t-tab-panel value="second" label="选项" :icon="appIcon" />
-
-      <t-tab-panel value="third">
-        <template #label>
-          <div class="label-content">
-            <icon-font name="logo-chrome" size="large" />
-            <span>选项</span>
-          </div>
-        </template>
-      </t-tab-panel>
+      <t-tab-panel value="first" label="好书" :icon="appIcon" />
+      <t-tab-panel value="second" label="名书" :icon="appIcon" />
+      <t-tab-panel value="third" label="新书" :icon="appIcon" />
     </t-tabs>
   </div>
 </template>
@@ -25,7 +17,7 @@ const appIcon = () => h(AppIcon, { size: 'large', style: { marginRight: '3px' } 
 
 <style lang="less" scoped>
 .t-tabs {
-  margin: 16px 10px;
+  margin: 16px 10px 25px 10px;
   border: 1px solid #e8e8e8;
   border-radius: 8px;
 }
