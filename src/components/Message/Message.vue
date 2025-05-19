@@ -5,7 +5,8 @@
     <div class="content">
       <ul>
         <li v-for="item in messageList" :key="item.id">
-          <Sender />
+          <Sender :id="item.id" :avatar="item.avatar" :name="item.name" :newMessage="item.newMessage" :time="item.time"
+            :unread="item.unread" />
           <t-divider style="margin: 0;" />
         </li>
       </ul>

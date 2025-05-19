@@ -6,24 +6,39 @@
     </div>
     <div class="info">
       <div class="name">
-        <span class="username">用户名</span>
+        <span class="username">{{ props.name }}</span>
       </div>
       <div class="message">
-        <span class="last-message">消息</span>
+        <span class="last-message">{{ props.newMessage }}</span>
       </div>
     </div>
     <div class="state">
-      <span>时间</span>
-      <t-badge count="8"></t-badge>
+      <span>{{ props.time }}</span>
+      <t-badge :count="props.unread"></t-badge>
     </div>
-    <t-divider style="margin: 0;" />
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
-const feature = ref();
+interface Props {
+  id: number;
+  avatar?: string;
+  name?: string;
+  newMessage?: string;
+  time?: string;
+  unread?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  avatar: "https://tdesign.gtimg.com/mobile/demos/avatar1.png",
+  name: "陌生用户",
+  newMessage: "一条消息",
+  time: "2023-07-18 15:01",
+  unread: 1,
+})
+
 </script>
 
 <style lang="css" scoped>
