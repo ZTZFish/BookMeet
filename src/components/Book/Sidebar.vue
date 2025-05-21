@@ -9,7 +9,11 @@
         <div class="title">{{ item.label }}</div>
         <ul class="showBooks">
           <li v-for="book in bookList" :key="book.id">
-            <BookCard />
+            <BookCard>
+              <template #>
+
+              </template>
+            </BookCard>
           </li>
         </ul>
       </div>
@@ -67,7 +71,56 @@ const onSideBarChange = (value: TdSideBarProps['value']) => {
   sideBarIndex.value = value;
 };
 
-let bookList: { id: number, name: string, }[]
+interface Book {
+  id?: number,
+  name?: string,
+  auther?: string,
+  price?: number,
+  tyep?: string,
+  garde?: string,
+  description?: string,
+  image?: string,
+  statu?: string,
+  publishingTiem?: string,
+}
+
+let bookList: Book[] = [
+  {
+    id: 1,
+    name: '《红楼梦》',
+    auther: '曹雪芹',
+    price: 59.70,
+    tyep: '文学艺术',
+    garde: '9.7',
+    description: '都云作者痴，谁解其中味？',
+    image: 'https://img1.doubanio.com/view/subject/s/public/s1070959.jpg',
+    statu: '现书',
+    publishingTiem: '1996年'
+  },
+  {
+    id: 2,
+    name: '活着',
+    auther: '余华',
+    price: 28.00,
+    tyep: '文学艺术',
+    garde: '9.4',
+    description: '生的困难与伟大。',
+    image: 'https://img9.doubanio.com/view/subject/s/public/s29869926.jpg',
+    statu: '预售',
+    publishingTiem: '2012年'
+  },
+  {
+    id: 3,
+    name: '哈利·波特',
+    auther: 'J.K.罗琳',
+    price: 498.00,
+    tyep: '社会科学',
+    garde: '9.7',
+    description: '从9¾站台开始的旅程',
+    image: 'https://img9.doubanio.com/view/subject/s/public/s29101586.jpg',
+    statu: '现书',
+    publishingTiem: '2008年'
+  }]
 </script>
 <style lang="less" scoped>
 .side-bar-wrapper {

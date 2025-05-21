@@ -1,13 +1,7 @@
 <template>
-  <div>
-    <div class="card">
-      <div class="card-image">
-        <img src="" alt="">
-      </div>
-      <div class="card-info">
-
-      </div>
-    </div>
+  <div class="card">
+    <slot name="card-image"></slot>
+    <slot name="card-info"></slot>
   </div>
 </template>
 
