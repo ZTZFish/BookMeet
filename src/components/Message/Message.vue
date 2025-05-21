@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import Sender from './Sender.vue';
-
+// 消息数据类型接口
 interface MessageItem {
   id: number;
   avatar: string;
@@ -52,7 +52,7 @@ const messageList: MessageItem[] = [
     unread: 1,
   }
 ]
-
+// 格式化时间
 const formatDisplayTime = (timeStr: string): string => {
   const messageDate = new Date(timeStr.replace(/-/g, '/'));
   const now = new Date();
