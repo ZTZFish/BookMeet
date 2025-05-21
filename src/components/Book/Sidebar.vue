@@ -7,13 +7,11 @@
     <div class="content" :style="`transform: translateY(-${Number(sideBarIndex) * 100}%)`">
       <div v-for="(item, index) in data.categories" :key="index" class="section">
         <div class="title">{{ item.label }}</div>
-        <div v-for="(cargo, cargoIndex) in item.items" :key="cargoIndex">
-          <t-cell :title="`${cargo.label}${index}`">
-            <template #image>
-              <t-image shape="round" :src="cargo.image" class="image" />
-            </template>
-          </t-cell>
-        </div>
+        <ul class="showBooks">
+          <li v-for="book in bookList" :key="book.id">
+            <BookCard />
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -68,6 +66,8 @@ const onSideBarClick = (value: TdSideBarProps['value'], label: TdSideBarItemProp
 const onSideBarChange = (value: TdSideBarProps['value']) => {
   sideBarIndex.value = value;
 };
+
+let bookList: { id: number, name: string, }[]
 </script>
 <style lang="less" scoped>
 .side-bar-wrapper {
@@ -86,18 +86,6 @@ const onSideBarChange = (value: TdSideBarProps['value']) => {
     box-sizing: border-box;
     height: 100%;
     overflow-y: auto;
-  }
-
-  .title {
-    padding-left: 20px;
-    margin-bottom: 4px;
-    line-height: 26px;
-  }
-
-  .image {
-    width: 48px;
-    height: 48px;
-    border: 1px solid #e7e7e7;
   }
 }
 </style>

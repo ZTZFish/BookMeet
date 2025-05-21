@@ -1,32 +1,3 @@
-<template>
-  <div class="swipper-wrapper" style="height: 250px;">
-    <Swipper />
-  </div>
-  <div class="activities-wrapper" style="margin-bottom: 16px;">
-    <Activities />
-  </div>
-  <div class="container" style="padding-bottom: 60px;">
-    <ul class="indexBookList" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
-      <li v-for="item in bookList" :key="item.id" class="grid-item">
-        <Card>
-          <template #bookImage>
-            <div class="book-image">
-              <img :src="item.image" alt="book-image" />
-            </div>
-          </template>
-          <template #infoBody>
-            <div class="infoBody">
-              <div class="book-title">{{ item.title }}</div>
-              <div class="book-author">{{ item.author }}</div>
-              <div class="book-price">{{ item.price }}</div>
-            </div>
-          </template>
-        </Card>
-      </li>
-    </ul>
-  </div>
-</template>
-
 <script setup>
 import Swipper from './Swipper.vue';
 import Activities from './Activities.vue';
@@ -39,6 +10,7 @@ const bookList = ref([
     title: 'Vue.js 设计与实现',
     author: 'TanStack',
     price: 89.00,
+
   },
   {
     id: 2,
@@ -65,6 +37,36 @@ const bookList = ref([
 
 </script>
 
+<template>
+  <div class="swipper-wrapper" style="height: 250px;">
+    <Swipper />
+  </div>
+  <div class="activities-wrapper" style="margin-bottom: 16px;">
+    <Activities />
+  </div>
+  <div class="container" style="padding-bottom: 60px;">
+    <ul class="indexBookList" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
+      <li v-for="item in bookList" :key="item.id" class="grid-item">
+        <IndexCard>
+          <template #bookImage>
+            <div class="book-image">
+              <img :src="item.image" alt="book-image" />
+            </div>
+          </template>
+          <template #infoBody>
+            <div class="infoBody">
+              <div class="book-title">{{ item.title }}</div>
+              <div class="price-state">
+                <div class="book-price"><span>￥</span>{{ item.price }}</div>
+                <t-tag theme="success" class="book-state">现书</t-tag>
+              </div>
+            </div>
+          </template>
+        </IndexCard>
+      </li>
+    </ul>
+  </div>
+</template>
 <style lang="css" scoped>
 .container {
   width: 100%;
@@ -84,11 +86,36 @@ const bookList = ref([
 }
 
 .infoBody {
+  position: relative;
+  height: 90px;
   padding: 10px;
 }
 
 .book-image img {
   width: 100%;
   height: auto;
+}
+
+.book-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.price-state {
+  position: absolute;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  bottom: 5px;
+}
+
+.book-price {
+  font-size: 20px;
+  color: #ff6600;
+}
+
+.book-state {
+  margin-left: auto;
+  margin-right: 5px;
 }
 </style>

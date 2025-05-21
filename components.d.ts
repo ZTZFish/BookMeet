@@ -10,8 +10,11 @@ declare module 'vue' {
   export interface GlobalComponents {
     Activities: typeof import('./src/components/Index/Activities.vue')['default']
     Book: typeof import('./src/components/Book/Book.vue')['default']
+    BookCard: typeof import('./src/components/Book/BookCard.vue')['default']
+    BookMenu: typeof import('./src/components/Book/BookMenu.vue')['default']
     Card: typeof import('./src/components/Card.vue')['default']
     Index: typeof import('./src/components/Index/Index.vue')['default']
+    IndexCard: typeof import('./src/components/Index/IndexCard.vue')['default']
     Message: typeof import('./src/components/Message/Message.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -25,6 +28,8 @@ declare module 'vue' {
     TCard: typeof import('tdesign-mobile-vue')['Card']
     TCell: typeof import('tdesign-mobile-vue')['Cell']
     TDivider: typeof import('tdesign-mobile-vue')['Divider']
+    TDropdownItem: typeof import('tdesign-mobile-vue')['DropdownItem']
+    TDropdownMenu: typeof import('tdesign-mobile-vue')['DropdownMenu']
     TImage: typeof import('tdesign-mobile-vue')['Image']
     TSideBar: typeof import('tdesign-mobile-vue')['SideBar']
     TSideBarItem: typeof import('tdesign-mobile-vue')['SideBarItem']
@@ -34,6 +39,7 @@ declare module 'vue' {
     TTabBarItem: typeof import('tdesign-mobile-vue')['TabBarItem']
     TTabPanel: typeof import('tdesign-mobile-vue')['TabPanel']
     TTabs: typeof import('tdesign-mobile-vue')['Tabs']
+    TTag: typeof import('tdesign-mobile-vue')['Tag']
     User: typeof import('./src/components/User/User.vue')['default']
   }
 }

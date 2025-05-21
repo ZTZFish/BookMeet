@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Tabbar from './components/Tabbar.vue';
-import Index from './components/index/Index.vue';
+import Index from './components/Index/Index.vue';
 import Book from './components/Book/Book.vue';
 import { useRouter, useRoute } from 'vue-router';
 
