@@ -1,18 +1,21 @@
 <template>
   <div class="demo-tab-bar">
     <t-tabs default-value="first">
-      <t-tab-panel value="first" label="好书" :icon="appIcon" />
-      <t-tab-panel value="second" label="名书" :icon="appIcon" />
+      <t-tab-panel value="first" label="好书" :icon="giggleIcon" />
+      <t-tab-panel value="second" label="名书" :icon="thumbUpIcon" />
       <t-tab-panel value="third" label="新书" :icon="appIcon" />
     </t-tabs>
+
   </div>
 </template>
 
 <script lang="ts" setup>
 import { h } from 'vue';
-import { IconFont, AppIcon } from 'tdesign-icons-vue-next';
+import { IconFont, AppIcon, GiggleIcon, ThumbUpIcon } from 'tdesign-icons-vue-next';
 
 const appIcon = () => h(AppIcon, { size: 'large', style: { marginRight: '3px' } });
+const giggleIcon = () => h(GiggleIcon, { size: 'large', style: { marginRight: '3px' } });
+const thumbUpIcon = () => h(ThumbUpIcon, { size: 'large', style: { marginRight: '3px' } });
 </script>
 
 <style lang="less" scoped>

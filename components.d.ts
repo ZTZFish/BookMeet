@@ -42,5 +42,6 @@ declare module 'vue' {
     TTabs: typeof import('tdesign-mobile-vue')['Tabs']
     TTag: typeof import('tdesign-mobile-vue')['Tag']
     User: typeof import('./src/components/User/User.vue')['default']
+    UserInfo: typeof import('./src/components/User/UserInfo.vue')['default']
   }
 }
