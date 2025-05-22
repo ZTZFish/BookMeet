@@ -30,6 +30,7 @@ declare module 'vue' {
     TDivider: typeof import('tdesign-mobile-vue')['Divider']
     TDropdownItem: typeof import('tdesign-mobile-vue')['DropdownItem']
     TDropdownMenu: typeof import('tdesign-mobile-vue')['DropdownMenu']
+    TIcon: typeof import('tdesign-mobile-vue')['Icon']
     TImage: typeof import('tdesign-mobile-vue')['Image']
     TRate: typeof import('tdesign-mobile-vue')['Rate']
     TSideBar: typeof import('tdesign-mobile-vue')['SideBar']

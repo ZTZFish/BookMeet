@@ -18,10 +18,6 @@ const routes = [
     component: () => import('../components/Message/Message.vue')
   },
   {
-    path: '/shoppingCard',
-    name: 'shoppingCard',
-    component: () => import('../components/ShoppingCard/ShoppingCard.vue')
-  }, {
     path: '/user',
     name: 'user',
     component: () => import('../components/User/User.vue')
