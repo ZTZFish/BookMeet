@@ -13,6 +13,8 @@ declare module 'vue' {
     BookCard: typeof import('./src/components/Book/BookCard.vue')['default']
     BookMenu: typeof import('./src/components/Book/BookMenu.vue')['default']
     Card: typeof import('./src/components/Card.vue')['default']
+    Demo: typeof import('./src/components/User/demo.vue')['default']
+    ElseFeatures: typeof import('./src/components/User/ElseFeatures.vue')['default']
     Index: typeof import('./src/components/Index/Index.vue')['default']
     IndexCard: typeof import('./src/components/Index/IndexCard.vue')['default']
     Message: typeof import('./src/components/Message/Message.vue')['default']
@@ -27,6 +29,7 @@ declare module 'vue' {
     TBadge: typeof import('tdesign-mobile-vue')['Badge']
     TCard: typeof import('tdesign-mobile-vue')['Card']
     TCell: typeof import('tdesign-mobile-vue')['Cell']
+    TCellGroup: typeof import('tdesign-mobile-vue')['CellGroup']
     TDivider: typeof import('tdesign-mobile-vue')['Divider']
     TDropdownItem: typeof import('tdesign-mobile-vue')['DropdownItem']
     TDropdownMenu: typeof import('tdesign-mobile-vue')['DropdownMenu']
@@ -43,6 +46,7 @@ declare module 'vue' {
     TTabs: typeof import('tdesign-mobile-vue')['Tabs']
     TTag: typeof import('tdesign-mobile-vue')['Tag']
     User: typeof import('./src/components/User/User.vue')['default']
+    UserFeatures: typeof import('./src/components/User/UserFeatures.vue')['default']
     UserInfo: typeof import('./src/components/User/UserInfo.vue')['default']
   }
 }

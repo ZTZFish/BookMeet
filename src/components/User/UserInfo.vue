@@ -2,43 +2,39 @@
 import { ref } from 'vue';
 import { EditIcon } from 'tdesign-icons-vue-next'
 
-const feature = ref();
 </script>
 
 <template>
-  <div class="page-background">
-    <h2 style="height: 80px;color: #000;line-height: 80px;text-align: center;">个人中心</h2>
-    <div class="user-info">
-      <div class="avatar">
-        <t-avatar class="avatar-example"
-          image="https://tse4-mm.cn.bing.net/th/id/OIP-C.nhBL64RfsRfgL-SLGbD5lQHaHa?cb=iwc2&rs=1&pid=ImgDetMain"
-          size="100px">
-        </t-avatar>
-      </div>
-      <div class="name-des">
-        <span class="username">用户名</span>
-        <span class="des">这个人很懒，什么也没有写...</span>
-      </div>
-      <div class="edit-userinfo">
-        <EditIcon class="edit-icon" />
-      </div>
+
+  <h2 style="height: 80px;color: #000;line-height: 80px;text-align: center;">个人中心</h2>
+  <t-divider />
+  <div class="user-info">
+    <div class="avatar">
+      <t-avatar class="avatar-example"
+        image="https://tse4-mm.cn.bing.net/th/id/OIP-C.nhBL64RfsRfgL-SLGbD5lQHaHa?cb=iwc2&rs=1&pid=ImgDetMain"
+        size="100px">
+      </t-avatar>
     </div>
+    <div class="name-des">
+      <div class="name-gender">
+        <span class="username">用户名</span>
+        <img src="../../assets/male.png" alt="">
+      </div>
+      <span class="des">这个人很懒，什么也没有写...</span>
+    </div>
+    <div class="edit-userinfo">
+      <EditIcon class="edit-icon" />
+    </div>
+    <hr style="margin: 10px 0;width: 90%;margin-left: 5%;">
+    <slot name="features"></slot>
   </div>
+
+
 </template>
 
 
 
 <style lang="less" scoped>
-.page-background {
-  /* 设置从上到下的线性渐变 */
-  background: linear-gradient(to bottom, #48f1d5, transparent);
-  /* 从青蓝色 (#a8dadc) 到透明 */
-  /* 确保背景覆盖整个容器 */
-  min-height: 100vh;
-  /* 如果需要覆盖整个视口高度 */
-  width: 100%;
-}
-
 .user-info {
   position: relative;
   display: block;
@@ -89,6 +85,12 @@ const feature = ref();
   margin-top: 10px;
   margin-left: 140px;
 
+  .name-gender {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   .username {
     font-size: 20px;
     font-weight: 600;
@@ -98,6 +100,12 @@ const feature = ref();
     font-size: 14px;
     color: #888;
     margin-top: 5px;
+  }
+
+  img {
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
   }
 }
 </style>

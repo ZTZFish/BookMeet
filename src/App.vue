@@ -13,7 +13,7 @@ const toPage = (pageName: string) => {
 </script>
 
 <template>
-  <router-view />
+  <router-view style="padding-bottom: 86px;" />
   <Tabbar @change-page="toPage" />
 </template>
 
