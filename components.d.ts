@@ -17,6 +17,7 @@ declare module 'vue' {
     ElseFeatures: typeof import('./src/components/User/ElseFeatures.vue')['default']
     Index: typeof import('./src/components/Index/Index.vue')['default']
     IndexCard: typeof import('./src/components/Index/IndexCard.vue')['default']
+    Login: typeof import('./src/components/User/Login.vue')['default']
     Message: typeof import('./src/components/Message/Message.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
