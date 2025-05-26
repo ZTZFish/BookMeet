@@ -1,47 +1,40 @@
 <script lang="ts" setup>
-
 import { reactive, ref } from 'vue';
 import { TdSideBarProps, TdSideBarItemProps } from 'tdesign-mobile-vue';
+import { useRouter } from 'vue-router';
 
-const image = 'https://tdesign.gtimg.com/mobile/demos/example2.png';
-const items = new Array(12).fill({ label: '标题文字', image }, 0, 12);
-const sideBarIndex = ref<TdSideBarProps['value']>(0);
+
 
 const data = reactive({
   categories: [
     {
       label: '文学艺术',
       badgeProps: {},
-      items,
     },
     {
       label: '社会科学',
       badgeProps: {},
-      items: items.slice(0, 9),
     },
     {
       label: '自然科学与技术',
       badgeProps: {},
-      items: items.slice(0, 9),
     },
     {
       label: '商业与管理',
       badgeProps: {},
-      items: items.slice(0, 6),
     },
     {
       label: '教育与考试',
       badgeProps: {},
-      items: items.slice(0, 3),
     },
     {
       label: '生活实用',
       badgeProps: {},
-      items: items.slice(0, 3),
     },
   ],
 });
 
+const sideBarIndex = ref<TdSideBarProps['value']>(1);
 const onSideBarClick = (value: TdSideBarProps['value'], label: TdSideBarItemProps['label']) => {
   console.log('=onSideBarClick===', value, label);
 };
@@ -51,7 +44,7 @@ const onSideBarChange = (value: TdSideBarProps['value']) => {
 };
 
 interface Book {
-  id?: number,
+  id: number,
   name?: string,
   auther?: string,
   price?: number,
@@ -100,6 +93,15 @@ let bookList: Book[] = [
     statu: '现书',
     publishingTiem: '2008年'
   }]
+
+const router = useRouter();
+
+const goToBookDetails = (bookId: number) => {
+  router.push({
+    name: 'bookdetails',
+    params: { bookId: bookId }
+  })
+};
 </script>
 
 <template>
@@ -112,7 +114,7 @@ let bookList: Book[] = [
       <div v-for="(item, index) in data.categories" :key="index" class="section">
         <div class="title">{{ item.label }}</div>
         <ul class="show-books">
-          <li v-for="book in bookList" :key="book.id">
+          <li v-for="book in bookList" :key="book.id" @click="goToBookDetails(book.id)" style="cursor: pointer;">
             <BookCard>
               <template #card-image>
                 <div class="book-image">

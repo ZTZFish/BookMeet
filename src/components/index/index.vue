@@ -1,7 +1,8 @@
-<script setup>
+<script setup lang="ts">
 import Swipper from './Swipper.vue';
 import Activities from './Activities.vue';
 import { ref } from 'vue';
+import IndexCard from './IndexCard.vue';
 
 const bookList = ref([
   {

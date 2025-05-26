@@ -10,7 +10,12 @@
 <script setup>
 import { ref } from 'vue';
 
-const feature = ref();
+const props = defineProps({
+  book: {
+
+    required: true,
+  },
+});
 </script>
 
 <style lang="css" scoped>

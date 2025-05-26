@@ -22,6 +22,16 @@ const routes = [
     name: 'user',
     component: () => import('../components/User/User.vue')
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../components/User/Login.vue')
+  },
+  {
+    path: '/bookdetails/:bookId',
+    name: 'bookdetails',
+    component: () => import('../components/BookDetails/BookDetails.vue')
+  }
 ]
 
 const router = createRouter({

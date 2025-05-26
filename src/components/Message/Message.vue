@@ -11,11 +11,13 @@
         </li>
       </ul>
     </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
 import Sender from './Sender.vue';
+
 // 消息数据类型接口
 interface MessageItem {
   id: number;
@@ -85,6 +87,7 @@ const formatDisplayTime = (timeStr: string): string => {
     return `${year}-${month}-${day}`;
   }
 };
+
 </script>
 
 <style lang="css" scoped>

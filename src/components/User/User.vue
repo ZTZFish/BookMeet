@@ -3,10 +3,8 @@ import UserInfo from './UserInfo.vue';
 import UserFeatures from './UserFeatures.vue';
 import ElseFeatures from './ElseFeatures.vue';
 import Login from './Login.vue';
-
 import { ref } from 'vue';
 
-const feature = ref();
 </script>
 
 <template>

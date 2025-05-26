@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import Tabbar from './components/Tabbar.vue';
-import Index from './components/Index/Index.vue';
-import Book from './components/Book/Book.vue';
-import { useRouter, useRoute } from 'vue-router';
+import FourIndex from './components/FourIndex.vue';
 
-const router = useRouter();
-const route = useRoute();
 
-const toPage = (pageName: string) => {
-  router.push({ name: pageName })
-}
 </script>
 
 <template>
-  <router-view style="padding-bottom: 86px;" />
-  <Tabbar @change-page="toPage" />
+  <div>
+    <FourIndex />
+  </div>
+
 </template>
 
 <style scoped></style>
