@@ -1,9 +1,9 @@
 <template>
   <div>
     <keep-alive>
-      <router-view style="padding-bottom: 86px;" />
+      <router-view class="placeholder" />
     </keep-alive>
-    <Tabbar @change-page="toPage" />
+    <Tabbar @change-page="toPage" v-show="['index', 'book', 'message', 'user'].includes(route.name as string)" />
   </div>
 </template>
 
@@ -21,4 +21,8 @@ const toPage = (pageName: string) => {
 
 </script>
 
-<style lang="css" scoped></style>
+<style lang="less" scoped>
+.placeholder {
+  padding-bottom: 86px;
+}
+</style>

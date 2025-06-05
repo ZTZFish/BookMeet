@@ -31,7 +31,7 @@ interface MessageItem {
 const messageList: MessageItem[] = [
   {
     id: 1,
-    avatar: "https://tse2-mm.cn.bing.net/th/id/OIP-C.iDIqHf0lpUx3wsewrab2zgHaHa?cb=iwc2&rs=1&pid=ImgDetMain",
+    avatar: "https://pic1.zhimg.com/v2-01a861b2352d663a023a75f82ae0b0c0_b.jpg",
     name: '中华商务图书专营店',
     newMessage: "请问收到书了吗？",
     time: "2025-05-18 14:30",

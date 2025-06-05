@@ -34,7 +34,7 @@ const data = reactive({
   ],
 });
 
-const sideBarIndex = ref<TdSideBarProps['value']>(1);
+const sideBarIndex = ref<TdSideBarProps['value']>(0);
 const onSideBarClick = (value: TdSideBarProps['value'], label: TdSideBarItemProps['label']) => {
   console.log('=onSideBarClick===', value, label);
 };
@@ -46,7 +46,7 @@ const onSideBarChange = (value: TdSideBarProps['value']) => {
 interface Book {
   id: number,
   name?: string,
-  auther?: string,
+  author?: string,
   price?: number,
   tyep?: string,
   grades?: number,
@@ -60,7 +60,7 @@ let bookList: Book[] = [
   {
     id: 1,
     name: '红楼梦',
-    auther: '曹雪芹',
+    author: '曹雪芹',
     price: 59.70,
     tyep: '文学艺术',
     grades: 9.7,
@@ -72,7 +72,7 @@ let bookList: Book[] = [
   {
     id: 2,
     name: '活着',
-    auther: '余华',
+    author: '余华',
     price: 28.00,
     tyep: '文学艺术',
     grades: 9.4,
@@ -84,7 +84,7 @@ let bookList: Book[] = [
   {
     id: 3,
     name: '哈利·波特',
-    auther: 'J.K.罗琳',
+    author: 'J.K.罗琳',
     price: 498.00,
     tyep: '社会科学',
     grades: 9.7,
@@ -99,7 +99,7 @@ const router = useRouter();
 const goToBookDetails = (bookId: number) => {
   router.push({
     name: 'bookdetails',
-    params: { bookId: bookId }
+    params: { bookId: bookId },
   })
 };
 </script>
@@ -128,7 +128,7 @@ const goToBookDetails = (bookId: number) => {
                   <div class="book-title">{{ book.name }}</div>
                 </div>
                 <div class="auther">
-                  <span>作者：</span>{{ book.auther }}
+                  <span>作者：</span>{{ book.author }}
                 </div>
                 <div class="rate-demo-cell" style="display: flex; align-items: center;margin-top: 5px;">
                   <span class="rate-demo-cell__label" style="margin-right:3px">评分：</span>

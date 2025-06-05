@@ -1,6 +1,7 @@
 <template>
   <div>
-    <t-navbar title="标题居中" :fixed="true" left-arrow :safeAreaInsetTop="true">
+    <t-navbar title="标题居中" :fixed="true" left-arrow :safeAreaInsetTop="true" @left-click="goBack"
+      style="z-index: 99999;">
       <template #right>
         <t-icon name="ellipsis" size="24px" />
       </template>
@@ -11,7 +12,9 @@
 <script setup lang="ts">
 import { Icon as TIcon } from 'tdesign-icons-vue-next';
 import { ref } from 'vue';
-
+const goBack = () => {
+  window.history.back();
+};
 
 </script>
 

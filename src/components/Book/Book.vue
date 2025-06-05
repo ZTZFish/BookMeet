@@ -2,7 +2,6 @@
   <div>
     <BookMenu />
     <Sidebar />
-
   </div>
 </template>
 
