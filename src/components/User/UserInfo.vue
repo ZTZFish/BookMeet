@@ -1,14 +1,19 @@
 <script setup>
 import { ref } from 'vue';
 import { EditIcon } from 'tdesign-icons-vue-next'
+import { useAuthStore } from '@/store/login'
+import { h } from 'vue';
+import { UserIcon } from 'tdesign-icons-vue-next';
+
+const userIcon = () => h(UserIcon);
+const user = useAuthStore()
 
 </script>
 
 <template>
-
   <h2 style="height: 80px;color: #000;line-height: 80px;text-align: center;">个人中心</h2>
   <t-divider />
-  <div class="user-info">
+  <div class="user-info" v-if="user.isLoggedIn == true">
     <div class="avatar">
       <t-avatar class="avatar-example"
         image="https://tse4-mm.cn.bing.net/th/id/OIP-C.nhBL64RfsRfgL-SLGbD5lQHaHa?cb=iwc2&rs=1&pid=ImgDetMain"
@@ -26,6 +31,18 @@ import { EditIcon } from 'tdesign-icons-vue-next'
       <EditIcon class="edit-icon" />
     </div>
     <hr style="margin: 10px 0;width: 90%;margin-left: 5%;">
+    <slot name="features"></slot>
+  </div>
+  <div class="user-info" v-else>
+    <div class="avatar">
+      <t-avatar class="avatar-example" :icon="userIcon" size="100px"></t-avatar>
+    </div>
+    <div class="name-des">
+      <div class="name-gender">
+        <span class="username" style="text-decoration: underline;color:#0052d9 ;">点击登录</span>
+      </div>
+    </div>
+    <hr style="margin:40px 0 10px 0;width: 90%;margin-left: 5%;">
     <slot name="features"></slot>
   </div>
 
@@ -56,6 +73,10 @@ import { EditIcon } from 'tdesign-icons-vue-next'
   border-radius: 50%;
   border: #0052d9 3px solid;
   box-sizing: content-box;
+
+  .avatar-example {
+    --td-avatar-icon-medium-font-size: 50px;
+  }
 }
 
 .edit-userinfo {

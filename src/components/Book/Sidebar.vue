@@ -98,55 +98,59 @@ const router = useRouter();
 
 const goToBookDetails = (bookId: number) => {
   router.push({
-    name: 'bookdetails',
+    name: 'Bookdetails',
     params: { bookId: bookId },
   })
 };
+
+
 </script>
 
 <template>
-  <div class="side-bar-wrapper">
-    <t-side-bar :value="sideBarIndex" @change="onSideBarChange" @click="onSideBarClick">
-      <t-side-bar-item v-for="(item, index) in data.categories" :key="index" :value="index" :label="item.label"
-        :badge-props="item.badgeProps" />
-    </t-side-bar>
-    <div class="content" :style="`transform: translateY(-${Number(sideBarIndex) * 100}%)`">
-      <div v-for="(item, index) in data.categories" :key="index" class="section">
-        <div class="title">{{ item.label }}</div>
-        <ul class="show-books">
-          <li v-for="book in bookList" :key="book.id" @click="goToBookDetails(book.id)" style="cursor: pointer;">
-            <BookCard>
-              <template #card-image>
-                <div class="book-image">
-                  <img :src="book.image" alt="" />
-                </div>
-              </template>
-              <template #card-info>
-                <div class="state-name">
-                  <t-tag theme="success" class="book-state" v-if="book.statu === '现书'">现书</t-tag>
-                  <t-tag theme="primary" v-else>预售</t-tag>
-                  <div class="book-title">{{ book.name }}</div>
-                </div>
-                <div class="auther">
-                  <span>作者：</span>{{ book.author }}
-                </div>
-                <div class="rate-demo-cell" style="display: flex; align-items: center;margin-top: 5px;">
-                  <span class="rate-demo-cell__label" style="margin-right:3px">评分：</span>
-                  <!-- 修正属性名称和绑定值 -->
-                  <t-rate variant="filled" :disabled="true" :value="Number((book.grades ?? 0) / 2)" size="20"
-                    :allow-half="true" :count="5" />
-                </div>
-                <div class="description" style="margin-top: 5px;">
-                  ”{{ book.description }}“
-                </div>
-                <div class="book-price">
-                  ￥{{ book.price }}
-                </div>
-              </template>
-            </BookCard>
-            <t-divider />
-          </li>
-        </ul>
+  <div class="sidebar-container" ref="scrollContainer">
+    <div class="side-bar-wrapper">
+      <t-side-bar :value="sideBarIndex" @change="onSideBarChange" @click="onSideBarClick">
+        <t-side-bar-item v-for="(item, index) in data.categories" :key="index" :value="index" :label="item.label"
+          :badge-props="item.badgeProps" />
+      </t-side-bar>
+      <div class="content" :style="`transform: translateY(-${Number(sideBarIndex) * 100}%)`">
+        <div v-for="(item, index) in data.categories" :key="index" class="section">
+          <div class="title">{{ item.label }}</div>
+          <ul class="show-books">
+            <li v-for="book in bookList" :key="book.id" @click="goToBookDetails(book.id)" style="cursor: pointer;">
+              <BookCard>
+                <template #card-image>
+                  <div class="book-image">
+                    <img :src="book.image" alt="" />
+                  </div>
+                </template>
+                <template #card-info>
+                  <div class="state-name">
+                    <t-tag theme="success" class="book-state" v-if="book.statu === '现书'">现书</t-tag>
+                    <t-tag theme="primary" v-else>预售</t-tag>
+                    <div class="book-title">{{ book.name }}</div>
+                  </div>
+                  <div class="auther">
+                    <span>作者：</span>{{ book.author }}
+                  </div>
+                  <div class="rate-demo-cell" style="display: flex; align-items: center;margin-top: 5px;">
+                    <span class="rate-demo-cell__label" style="margin-right:3px">评分：</span>
+                    <!-- 修正属性名称和绑定值 -->
+                    <t-rate variant="filled" :disabled="true" :value="Number((book.grades ?? 0) / 2)" size="20"
+                      :allow-half="true" :count="5" />
+                  </div>
+                  <div class="description" style="margin-top: 5px;">
+                    ”{{ book.description }}“
+                  </div>
+                  <div class="book-price">
+                    ￥{{ book.price }}
+                  </div>
+                </template>
+              </BookCard>
+              <t-divider />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

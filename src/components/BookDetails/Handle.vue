@@ -1,24 +1,63 @@
 <template>
   <div class="handle-content">
     <div class="left">
-      <div class="connect">
+      <div class="connect" @click="connect">
         <img src="../../assets/connect.png" alt="联系客服">
         <span>联系客服</span>
       </div>
-      <div class="add-book">
+      <div class="add-book" @click="addBook">
         <img src="../../assets/addbook.png" alt="加入书架">
         <span>加入书架</span>
       </div>
     </div>
     <div class="right">
-      <button class="add-shoppingcard">加入购物车</button>
-      <button class="buy">立即购买</button>
+      <button class="add-shoppingcard" @click="addShoppingCard">加入购物车</button>
+      <button class="buy" @click="buyNow">立即购买</button>
     </div>
   </div>
+  <t-message style="margin-top: 50px;" v-model="visible" :offset="[10, 16]" :duration="-1" theme="warning"
+    content="请先登录" link="去登录" :close-btn="true" />
 </template>
 
 <script setup>
+import { useAuthStore } from '../../store/login';
+import { ref } from 'vue';
 
+const visible = ref(false);
+const user = useAuthStore();
+function addShoppingCard() {
+  checkLogin();
+  // 已登录时执行加入购物车逻辑
+}
+
+function buyNow() {
+  checkLogin();
+  // 已登录时执行购买逻辑
+}
+
+function connect() {
+  checkLogin();
+}
+
+function addBook() {
+  checkLogin();
+}
+
+const checkLogin = () => {
+  if (!user.isLoggedIn) {
+    console.log(visible.value);
+    if (visible.value == true) {
+      visible.value = false;
+      setTimeout(() => {
+        visible.value = true;
+      }, 10);
+    }
+    else {
+      visible.value = true;
+      return;
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>

@@ -1,5 +1,10 @@
 <script setup lang="ts">
-
+const props = defineProps({
+  market: {
+    type: Object,
+    default: () => ({}),
+  }
+})
 
 </script>
 
@@ -8,16 +13,14 @@
   <div class="market-info">
     <div class="content">
       <div class="market-pic">
-        <img
-          src="https://tse2-mm.cn.bing.net/th/id/OIP-C.THolggJT8YB5ZJDga2qxzgAAAA?w=186&h=150&c=7&r=0&o=5&cb=iwc2&dpr=1.5&pid=1.7"
-          alt="">
+        <img :src="props.market.image" alt="">
       </div>
       <div class="right">
         <div class="market-name">
-          <span>大众书局</span>
+          <span>{{ props.market.name }}</span>
         </div>
         <div class="company">
-          <span>江苏大众书局商务服务有限公司</span>
+          <span>{{ props.market.company }}</span>
         </div>
         <div class="go-to-market">
           <svg t="1748357264209" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"

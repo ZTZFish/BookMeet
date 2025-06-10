@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, defineProps } from 'vue';
+
+const props = defineProps({
+  bookInfo: {
+    type: Object,
+    default: () => ({}),
+  },
+});
 
 const logisticsVisible = ref(false);
 const rightsVisible = ref(false);
@@ -33,65 +40,39 @@ const onClick = (item: any) => {
   nextTick(() => (visible.value = true));
 };
 const visible = ref(false);
-//虚假书籍信息
-const bookInfo =
-{
-  id: 1,
-  name: '红楼梦',
-  author: '曹雪芹',
-  price: 59.70,
-  tyep: '文学艺术',
-  grades: 9.7,
-  description: '都云作者痴，谁解其中味',
-  image: 'https://img1.doubanio.com/view/subject/s/public/s1070959.jpg',
-  statu: '现书',
-  publishingTiem: '1996年',
-  marketer: '大众书局',
-  marketAddress: '北京市朝阳区',
-  publisher: '人民文学出版社',
-  pages: '287页',
-  ISBN: '9787544729323',
-  binding: '精装',
-  language: '中文',
-  size: '201mm*62mm*140mm',
-  introduction: `《红楼梦》是一部百科全书式的长篇小说。以宝黛爱情悲剧为主线，以四大家族的荣辱兴衰为背景，描绘出18世纪中国封建社会的方方面面，以及封建专制下新兴资本主义民主思想的萌动。结构宏大、情节委婉、细节精致，人物形象栩栩如生，声口毕现，堪称中国古代小说中的经典。\n
-由红楼梦研究所校注、人民文学出版社出版的《红楼梦》以庚辰（1760）本《脂砚斋重评石头记》为底本，以甲戌（1754）本、已卯（1759）本、蒙古王府本、戚蓼生序本、舒元炜序本、郑振铎藏本、红楼梦稿本、列宁格勒藏本（俄藏本）、程甲本、程乙本等众多版本为参校本，是一个博采众长、非常适合大众阅读的本子；同时，对底本的重要修改，皆出校记，读者可因以了解《红楼梦》的不同版本状况。\n
-红学所的校注本已印行二十五年，其间1994年曾做过一次修订，又十几年过去，2008年推出修订第三版，体现了新的校注成果和科研成果。\n
-关于《红楼梦》的作者，原本就有多种说法及推想，“前八十回曹雪芹著、后四十回高鹗续”的说法只是其中之一，这次修订中校注者改为“前八十回曹雪芹著；后四十回无名氏续，程伟元、高鹗整理”，应当是一种更科学的表述，体现了校注者对这一问题的新的认识。\n
-现在这个修订后的《红楼梦》是更加完善。\n`
-}
+
 </script>
 
 <template>
   <div class="book-content">
     <div class="price">
       <span>新客专享折后价￥</span>
-      <span style="font-size: 2em;font-weight: 600;">{{ (bookInfo.price * 0.85).toFixed(2) }}</span>
-      <span style="margin-left: 10px;">| 优惠前￥{{ bookInfo.price }}</span>
+      <span style="font-size: 2em;font-weight: 600;">{{ (Number(props.bookInfo.price) * 0.85).toFixed(2) }}</span>
+      <span style="margin-left: 10px;">| 优惠前￥{{ props.bookInfo.price }}</span>
     </div>
     <div class="book-name">
-      <t-tag theme="success" size="large" v-if="bookInfo.statu == '现书'">现书</t-tag>
+      <t-tag theme="success" size="large" v-if="props.bookInfo.status == '现书'">现书</t-tag>
       <t-tag theme="primary" size="large" v-else>预售</t-tag>
-      <span class="name">{{ bookInfo.name }}</span>
-      <span class="author">{{ bookInfo.author }}</span>
+      <span class="name">{{ props.bookInfo.name }}</span>
+      <span class="author">{{ props.bookInfo.author }}</span>
     </div>
     <div class="grades">
       <img src="../../assets/favicon.ico" alt="豆瓣">
-      <span> 豆瓣评分（{{ bookInfo.grades }}）：</span>
-      <t-rate variant="filled" :disabled="false" :value="Number((bookInfo.grades ?? 0) / 2)" size="20"
+      <span> 豆瓣评分（{{ props.bookInfo.grades }}）：</span>
+      <t-rate variant="filled" :disabled="false" :value="Number((props.bookInfo.grades ?? 0) / 2)" size="20"
         :allow-half="true" :count="5" />
     </div>
     <t-cell-group theme="card" class="good-info">
       <div class="popup-demo">
         <div class="book-introduction" @click="onClickBookIntroduction">
           <img src="../../assets/introduction.png" alt="书籍介绍">
-          <t-cell title="书籍介绍" hover :note="bookInfo.description" arrow />
+          <t-cell title="书籍介绍" hover :note="props.bookInfo.description" arrow />
         </div>
         <t-popup v-model="bookIntroductionVisible" :placement="currentPlacement" destroy-on-close close-btn
           style="padding:0 10px;height: 500px;">
           <div class="introduction-popup-content" style="height: 100%; overflow-y: auto;">
             <h2 style="height: 40px;line-height: 40px;text-align: center;">书籍介绍</h2>
-            <p style="white-space: pre-wrap;">{{ bookInfo.introduction }}</p>
+            <p style="white-space: pre-wrap;">{{ props.bookInfo.introduction }}</p>
           </div>
         </t-popup>
       </div>
@@ -148,15 +129,15 @@ const bookInfo =
           <div class="detail-popup-content">
             <h2 style="height: 40px;line-height: 40px;text-align: center;">详细信息</h2>
             <ul>
-              <li><b>ISBN：</b>{{ bookInfo.ISBN }}</li>
-              <li><b>状态：</b>{{ bookInfo.statu }}</li>
-              <li><b>作者：</b>{{ bookInfo.author }}</li>
-              <li><b>规格：</b>{{ bookInfo.size }}</li>
-              <li><b>页数：</b>{{ bookInfo.pages }}</li>
-              <li><b>装帧模式：</b>{{ bookInfo.binding }}</li>
-              <li><b>语言：</b>{{ bookInfo.language }}</li>
-              <li><b>出版社：</b>{{ bookInfo.publisher }}</li>
-              <li><b>出版时间：</b>{{ bookInfo.publishingTiem }}</li>
+              <li><b>ISBN：</b>{{ props.bookInfo.ISBN }}</li>
+              <li><b>状态：</b>{{ props.bookInfo.status }}</li>
+              <li><b>作者：</b>{{ props.bookInfo.author }}</li>
+              <li><b>规格：</b>{{ props.bookInfo.size }}</li>
+              <li><b>页数：</b>{{ props.bookInfo.pages }}</li>
+              <li><b>装帧模式：</b>{{ props.bookInfo.binding }}</li>
+              <li><b>语言：</b>{{ props.bookInfo.language }}</li>
+              <li><b>出版社：</b>{{ props.bookInfo.publisher }}</li>
+              <li><b>出版时间：</b>{{ props.bookInfo.publishingTime }}</li>
             </ul>
           </div>
         </t-popup>

@@ -3,6 +3,17 @@ import Swipper from './Swipper.vue';
 import Activities from './Activities.vue';
 import { ref } from 'vue';
 import IndexCard from './IndexCard.vue';
+import { useScrollPosition } from '../../composables/useScrollPosition';
+
+// 创建滚动容器的引用
+const scrollContainer = ref(null);
+
+// 使用滚动位置保存，传入容器引用
+const { savePosition } = useScrollPosition(scrollContainer);
+
+defineOptions({
+  name: 'Index',
+})
 
 const bookList = ref([
   {
@@ -39,40 +50,50 @@ const bookList = ref([
 </script>
 
 <template>
-  <div class="index">
-    <div class="swipper-wrapper" style="height: 250px;">
-      <Swipper />
-    </div>
-    <div class="activities-wrapper" style="margin-bottom: 16px;">
-      <Activities />
-    </div>
-    <div class="container">
-      <ul class="indexBookList" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
-        <li v-for="item in bookList" :key="item.id" class="grid-item">
-          <IndexCard>
-            <template #bookImage>
-              <div class="book-image">
-                <img :src="item.image" alt="book-image" />
-              </div>
-            </template>
-            <template #infoBody>
-              <div class="infoBody">
-                <div class="book-title">{{ item.title }}</div>
-                <div class="price-state">
-                  <div class="book-price"><span>￥</span>{{ item.price }}</div>
-                  <t-tag theme="success" class="book-state">现书</t-tag>
+  <!-- 添加滚动容器 -->
+  <div ref="scrollContainer" class="scroll-container">
+    <div class="index">
+      <div class="swipper-wrapper" style="height: 250px;">
+        <Swipper />
+      </div>
+      <div class="activities-wrapper" style="margin-bottom: 16px;">
+        <Activities />
+      </div>
+      <div class="container">
+        <ul class="indexBookList" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
+          <li v-for="item in bookList" :key="item.id" class="grid-item">
+            <IndexCard>
+              <template #bookImage>
+                <div class="book-image">
+                  <img :src="item.image" alt="book-image" />
                 </div>
-              </div>
-            </template>
-          </IndexCard>
-        </li>
-      </ul>
+              </template>
+              <template #infoBody>
+                <div class="infoBody">
+                  <div class="book-title">{{ item.title }}</div>
+                  <div class="price-state">
+                    <div class="book-price"><span>￥</span>{{ item.price }}</div>
+                    <t-tag theme="success" class="book-state">现书</t-tag>
+                  </div>
+                </div>
+              </template>
+            </IndexCard>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-
 </template>
 
 <style lang="css" scoped>
+/* 滚动容器样式 */
+.scroll-container {
+  height: calc(100vh - 86px);
+  /* 减去底部 tabbar 的高度 */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .container {
   width: 100%;
   display: block;

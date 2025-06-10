@@ -1,7 +1,7 @@
 <template>
   <div>
-    <t-navbar title="标题居中" :fixed="true" left-arrow :safeAreaInsetTop="true" @left-click="goBack"
-      style="z-index: 99999;">
+    <t-navbar :title="props.title" :fixed="true" left-arrow :safeAreaInsetTop="true" @left-click="goBack"
+      style="z-index: 999;">
       <template #right>
         <t-icon name="ellipsis" size="24px" />
       </template>
@@ -16,6 +16,12 @@ const goBack = () => {
   window.history.back();
 };
 
+const props = defineProps({
+  title: {
+    type: String,
+    default: '标题居中',
+  }
+}) 
 </script>
 
 <style lang="less" scoped>

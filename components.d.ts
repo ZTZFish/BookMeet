@@ -48,6 +48,8 @@ declare module 'vue' {
     TIcon: typeof import('tdesign-mobile-vue')['Icon']
     TImage: typeof import('tdesign-mobile-vue')['Image']
     TImageViewer: typeof import('tdesign-mobile-vue')['ImageViewer']
+    TLoading: typeof import('tdesign-mobile-vue')['Loading']
+    TMessage: typeof import('tdesign-mobile-vue')['Message']
     TNavbar: typeof import('tdesign-mobile-vue')['Navbar']
     TPopup: typeof import('tdesign-mobile-vue')['Popup']
     TRate: typeof import('tdesign-mobile-vue')['Rate']

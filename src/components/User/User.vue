@@ -4,6 +4,11 @@ import UserFeatures from './UserFeatures.vue';
 import ElseFeatures from './ElseFeatures.vue';
 import Login from './Login.vue';
 import { ref } from 'vue';
+import { useScrollPosition } from '../../composables/useScrollPosition';
+
+defineOptions({
+  name: 'User',
+})
 
 </script>
 

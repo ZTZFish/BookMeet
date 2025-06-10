@@ -4,39 +4,43 @@ const routes = [
   { path: '/', redirect: '/index' },
   {
     path: '/index',
-    name: 'index',
-    component: () => import('../components/Index/Index.vue')
+    name: 'Index',
+    component: () => import('../components/Index/Index.vue'),
+    meta: { keepAlive: true }
   },
   {
     path: '/book',
-    name: 'book',
-    component: () => import('../components/Book/Book.vue')
+    name: 'Book',
+    component: () => import('../components/Book/Book.vue'),
+    meta: { keepAlive: true }
   },
   {
     path: '/message',
-    name: 'message',
-    component: () => import('../components/Message/Message.vue')
+    name: 'Message',
+    component: () => import('../components/Message/Message.vue'),
+    meta: { keepAlive: true }
   },
   {
     path: '/user',
-    name: 'user',
-    component: () => import('../components/User/User.vue')
+    name: 'User',
+    component: () => import('../components/User/User.vue'),
+    meta: { keepAlive: true }
   },
   {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     component: () => import('../components/User/Login.vue')
   },
   {
     path: '/bookdetails/:bookId',
-    name: 'bookdetails',
+    name: 'Bookdetails',
     component: () => import('../components/BookDetails/BookDetails.vue')
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 })
 
 export default router
