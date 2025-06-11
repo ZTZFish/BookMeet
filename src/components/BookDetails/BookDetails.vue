@@ -6,7 +6,7 @@ import MarketInfo from './MarketInfo.vue';
 import BookComments from './BookComments.vue';
 import Handle from './Handle.vue';
 import { onBeforeMount, ref } from 'vue';
-import { bookDetail } from '../../request/book'; // 注意这里是bookDetails，不是bookDetail
+import { bookDetail } from '../../request/bookApi'; // 注意这里是bookDetails，不是bookDetail
 import { useRoute } from 'vue-router'; // 引入useRoute
 
 // 定义一个函数，用于获取书籍详情

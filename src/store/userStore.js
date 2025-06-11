@@ -18,25 +18,14 @@ export const useAuthStore = defineStore('auth', () => {
     isLoading.value = true;
     error.value = null;
     try {
-      // 这里是模拟的登录逻辑，实际中会调用后端 API
       console.log('Attempting to log in with:', credentials);
-      // 假设登录成功后返回用户数据和 token
-      // const response = await api.post('/login', credentials);
-      // user.value = response.data.user;
-      // token.value = response.data.token;
-      // isLoggedIn.value = true;
-
-      // 模拟成功
-      await new Promise(resolve => setTimeout(resolve, 1000)); // 模拟网络延迟
       user.value = { id: 1, username: credentials.username };
-      token.value = 'fake-auth-token';
+      token.value = credentials.token;
       isLoggedIn.value = true;
 
       console.log('Login successful');
 
     } catch (err) {
-      // 模拟失败
-      await new Promise(resolve => setTimeout(resolve, 1000)); // 模拟网络延迟
       error.value = '登录失败：用户名或密码错误'; // 存储错误信息
       console.error('Login failed:', err);
 
@@ -45,6 +34,7 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = null;
       token.value = null;
 
+      throw err; // 重新抛出错误，以便在组件中捕获
     } finally {
       isLoading.value = false;
     }
@@ -72,4 +62,6 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     // isAdmin, // 如果定义了计算属性，也需要返回
   }
-})
+}, {
+  persist: true, // 启用状态持久化
+});

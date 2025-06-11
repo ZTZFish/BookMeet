@@ -27,14 +27,19 @@ const routes = [
     meta: { keepAlive: true }
   },
   {
+    path: '/bookdetails/:bookId',
+    name: 'Bookdetails',
+    component: () => import('../components/BookDetails/BookDetails.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('../components/User/Login.vue')
   },
   {
-    path: '/bookdetails/:bookId',
-    name: 'Bookdetails',
-    component: () => import('../components/BookDetails/BookDetails.vue')
+    path: '/address',
+    name: 'Address',
+    component: () => import('../components/Adress/Adress.vue')
   }
 ]
 

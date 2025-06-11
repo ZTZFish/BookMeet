@@ -1,13 +1,20 @@
 <script setup>
-import { ref } from 'vue';
 import { EditIcon } from 'tdesign-icons-vue-next'
-import { useAuthStore } from '@/store/login'
-import { h } from 'vue';
+import { useAuthStore } from '@/store/userStore'
+import { h, ref } from 'vue';
 import { UserIcon } from 'tdesign-icons-vue-next';
+import Login from './Login.vue';
+import { useRouter } from 'vue-router';
 
 const userIcon = () => h(UserIcon);
 const user = useAuthStore()
+const router = useRouter()
 
+const login = () => {
+  router.push({
+    name: 'Login'
+  })
+}
 </script>
 
 <template>
@@ -22,7 +29,7 @@ const user = useAuthStore()
     </div>
     <div class="name-des">
       <div class="name-gender">
-        <span class="username">用户名</span>
+        <span class="username">{{ user.user.username }}</span>
         <img src="../../assets/male.png" alt="">
       </div>
       <span class="des">这个人很懒，什么也没有写...</span>
@@ -39,14 +46,12 @@ const user = useAuthStore()
     </div>
     <div class="name-des">
       <div class="name-gender">
-        <span class="username" style="text-decoration: underline;color:#0052d9 ;">点击登录</span>
+        <span class="username" style="text-decoration: underline;color:#0052d9 ;" @click="login">点击登录</span>
       </div>
     </div>
     <hr style="margin:40px 0 10px 0;width: 90%;margin-left: 5%;">
     <slot name="features"></slot>
   </div>
-
-
 </template>
 
 

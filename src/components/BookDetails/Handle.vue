@@ -20,44 +20,30 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '../../store/login';
+import { useAuthStore } from '../../store/userStore';
 import { ref } from 'vue';
+import checkLogin from '../../composables/checkLogin'
 
 const visible = ref(false);
 const user = useAuthStore();
 function addShoppingCard() {
-  checkLogin();
+  checkLogin(user, visible);
   // 已登录时执行加入购物车逻辑
 }
 
 function buyNow() {
-  checkLogin();
+  checkLogin(user, visible);
   // 已登录时执行购买逻辑
 }
 
 function connect() {
-  checkLogin();
+  checkLogin(user, visible);
 }
 
 function addBook() {
-  checkLogin();
+  checkLogin(user, visible);
 }
 
-const checkLogin = () => {
-  if (!user.isLoggedIn) {
-    console.log(visible.value);
-    if (visible.value == true) {
-      visible.value = false;
-      setTimeout(() => {
-        visible.value = true;
-      }, 10);
-    }
-    else {
-      visible.value = true;
-      return;
-    }
-  }
-};
 </script>
 
 <style lang="less" scoped>

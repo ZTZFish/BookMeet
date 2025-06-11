@@ -12,7 +12,8 @@
     "axios": "^1.9.0",
     "less": "^4.3.0",
     "pinia": "^3.0.2",
-    "tdesign-mobile-vue": "^1.8.4",
+    "pinia-plugin-persistedstate": "^4.3.0",
+    "tdesign-mobile-vue": "^1.9.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.1"
   },
