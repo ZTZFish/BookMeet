@@ -302,7 +302,7 @@ const handleLogin = async () => {
     try {
       const response = await login(loginForm.value.username, loginForm.value.password);
       if (response.status === 'success') {
-        authStore.login({ username: loginForm.value.username, token: response.token }); // 假设后端返回token
+        authStore.login({ _id: response.user._id, username: loginForm.value.username, token: response.token }); // 假设后端返回token
         alert('登录成功');
         router.back();
       } else {

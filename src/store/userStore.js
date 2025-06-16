@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue' // 确保导入 ref 和 computed
 
 // 定义一个新的 Store 来管理认证状态
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore('user', () => {
   // 状态
   const isLoggedIn = ref(false)
   const user = ref(null) // 可以是用户对象或 null
@@ -18,8 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
     isLoading.value = true;
     error.value = null;
     try {
-      console.log('Attempting to log in with:', credentials);
-      user.value = { id: 1, username: credentials.username };
+      user.value = { _id: credentials._id, username: credentials.username };
       token.value = credentials.token;
       isLoggedIn.value = true;
 
@@ -41,13 +40,11 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function logout() {
-    // 这里是模拟的登出逻辑，实际中可能需要调用后端 API 或清除本地存储
     console.log('Logging out');
     isLoggedIn.value = false;
     user.value = null;
     token.value = null;
     error.value = null; // 清除错误信息
-    // 实际中可能需要清除 localStorage 或 sessionStorage 中的 token
     // localStorage.removeItem('auth_token');
   }
 

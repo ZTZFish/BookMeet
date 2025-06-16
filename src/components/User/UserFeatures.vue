@@ -13,6 +13,12 @@ const order = () => {
 
 const cart = () => {
   checkLogin(user, visible);
+  let result = checkLogin(user, visible);
+  if (result == true) {
+    router.push({
+      name: 'Cart'
+    })
+  }
 }
 
 const bookshelf = () => {

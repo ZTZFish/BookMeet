@@ -23,6 +23,7 @@ async function fetchBook() {
     if (bookId) {
       const { data } = await bookDetail(Number(bookId)); // 确保bookId是数字类型
       book.value = data.book; // 将书籍详情存储在book变量中
+      console.log(book.value);
     } else {
       console.warn('找不到ID');
     }

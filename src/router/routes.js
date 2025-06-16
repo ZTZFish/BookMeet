@@ -39,7 +39,12 @@ const routes = [
   {
     path: '/address',
     name: 'Address',
-    component: () => import('../components/Adress/Adress.vue')
+    component: () => import('../components/Address/Address.vue')
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('../components/Cart/Cart.vue')
   }
 ]
 

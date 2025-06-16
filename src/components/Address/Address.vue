@@ -1,19 +1,20 @@
 <template>
-  <div>
-    <t-navbar title="我的收货地址" :fixed="false" left-arrow @left-click="handleClick" />
-    <div class="adresses">
-      <div class="address" v-for="(address, index) in addressList" :key="index">
+  <t-navbar title="我的收货地址" :fixed="true" left-arrow @left-click="handleClick" class="custom-navbar" />
+  <div style="padding-top: 70px;">
+    <div class="loading" v-show="load"><t-loading size="30px" theme="spinner" /></div>
+    <div class="adresses" v-show="!load"> <!-- 当load为false时才显示地址内容 -->
+      <div class="address" v-for="(address, index) in addressStore.addressList" :key="index">
         <div class="address-card">
           <div class="card-content">
             <div class="card-header">
               <div>
-                <span class="name">{{ address.name }}</span>
+                <span class="consignee">{{ address.consignee }}</span>
                 <span class="phone">{{ address.phone }}</span>
               </div>
               <span v-if="address.isDefault" class="default-tag">默认地址</span>
             </div>
-            <p class="address-detail">{{ address.province }} {{ address.city }} {{ address.district }} {{ address.detail
-            }}</p>
+            <p class="address-detailAddress">{{ address.province }} {{ address.city }} {{ address.county }} {{
+              address.detailAddress }}</p>
           </div>
           <div class="card-footer">
             <button class="action-btn edit-btn" @click="editAddress(index)">
@@ -30,21 +31,17 @@
       </div>
 
       <!-- 空状态 -->
-      <div v-if="addressList.length === 0" class="empty-state">
+      <div v-if="addressStore.addressList.length === 0" class="empty-state">
         <i class="fa fa-map-marker"></i>
         <p>您还没有添加收货地址</p>
-        <button class="add-btn" @click="addNewAddress">
-          <i class="fa fa-plus"></i> 添加新地址
+      </div>
+      <!-- 添加新地址按钮 -->
+      <div class="fixed-bottom-btn">
+        <button class="add-new-btn" @click="addNewAddress">
+          <i class="fa fa-plus-circle"></i>
+          添加新地址
         </button>
       </div>
-    </div>
-
-    <!-- 添加新地址按钮 -->
-    <div class="fixed-bottom-btn">
-      <button class="add-new-btn" @click="addNewAddress">
-        <i class="fa fa-plus-circle"></i>
-        添加新地址
-      </button>
     </div>
 
     <!-- 地址编辑模态框 -->
@@ -59,7 +56,7 @@
         <div class="modal-body">
           <div class="form-group">
             <label>收货人姓名</label>
-            <input type="text" v-model="form.name" class="form-input" placeholder="请输入收货人姓名">
+            <input type="text" v-model="form.consignee" class="form-input" placeholder="请输入收货人姓名">
           </div>
           <div class="form-group">
             <label>手机号码</label>
@@ -93,7 +90,7 @@
             </div>
             <div class="form-col">
               <label>区县</label>
-              <select v-model="form.district" class="form-select">
+              <select v-model="form.county" class="form-select">
                 <option value="">请选择</option>
                 <option v-if="form.city === '广州市'">天河区</option>
                 <option v-if="form.city === '广州市'">越秀区</option>
@@ -112,7 +109,7 @@
           </div>
           <div class="form-group">
             <label>详细地址</label>
-            <textarea v-model="form.detail" rows="3" class="form-textarea" placeholder="请输入详细地址"></textarea>
+            <textarea v-model="form.detailAddress" rows="3" class="form-textarea" placeholder="请输入详细地址"></textarea>
           </div>
           <div class="form-checkbox">
             <input type="checkbox" id="setAsDefault" v-model="form.isDefault" class="custom-checkbox">
@@ -123,7 +120,7 @@
           <button class="cancel-btn" @click="closeModal">
             取消
           </button>
-          <button class="save-btn" @click="saveAddress">
+          <button class="save-btn" @click="saveAddress(editingIndex)">
             保存
           </button>
         </div>
@@ -133,31 +130,30 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onBeforeMount, onBeforeUnmount } from 'vue';
+import { useAddressStore } from '../../store/addressStore';
 
-// 地址列表数据
-const addressList = ref([
-  {
-    id: 1,
-    name: '张三',
-    phone: '13800138000',
-    province: '广东省',
-    city: '广州市',
-    district: '天河区',
-    detail: '天河路230号',
-    isDefault: true
-  },
-  {
-    id: 2,
-    name: '李四',
-    phone: '13900139000',
-    province: '江苏省',
-    city: '南京市',
-    district: '鼓楼区',
-    detail: '中山路123号',
-    isDefault: false
+defineOptions({
+  name: 'Address',
+  inheritAttrs: false
+})
+
+const addressStore = useAddressStore();
+const load = ref(true); // 定义load变量，初始为true，表示正在加载
+
+onBeforeMount(async () => {
+  load.value = true; // 开始加载数据
+  await addressStore.initAddressList();
+  load.value = false; // 数据加载完成
+});
+
+onBeforeUnmount(async () => {
+  try {
+    await addressStore.saveNewAddress();
+  } catch (error) {
+    console.error('退出页面时保存地址信息出错:', error);
   }
-]);
+});
 
 // 模态框状态
 const showModal = ref(false);
@@ -165,12 +161,12 @@ const editingIndex = ref(-1);
 
 // 表单数据
 const form = ref({
-  name: '',
+  consignee: '',
   phone: '',
   province: '',
   city: '',
-  district: '',
-  detail: '',
+  county: '',
+  detailAddress: '',
   isDefault: false
 });
 
@@ -183,12 +179,12 @@ const handleClick = () => {
 const addNewAddress = () => {
   // 重置表单
   form.value = {
-    name: '',
+    consignee: '',
     phone: '',
     province: '',
     city: '',
-    district: '',
-    detail: '',
+    county: '',
+    detailAddress: '',
     isDefault: false
   };
   editingIndex.value = -1;
@@ -198,7 +194,7 @@ const addNewAddress = () => {
 // 打开编辑地址模态框
 const editAddress = (index) => {
   // 复制地址数据到表单
-  form.value = { ...addressList.value[index] };
+  form.value = { ...addressStore.addressList[index] };
   editingIndex.value = index;
   showModal.value = true;
 }
@@ -206,18 +202,18 @@ const editAddress = (index) => {
 // 删除地址
 const deleteAddress = (index) => {
   if (confirm('确定要删除这个地址吗？')) {
-    addressList.value.splice(index, 1);
+    addressStore.deleteAddress(index);
   }
 }
 
 // 设置默认地址
 const setDefault = (index) => {
   // 先将所有地址设为非默认
-  addressList.value.forEach(item => {
+  addressStore.addressList.forEach(item => {
     item.isDefault = false;
   });
   // 将当前地址设为默认
-  addressList.value[index].isDefault = true;
+  addressStore.addressList[index].isDefault = true;
 }
 
 // 关闭模态框
@@ -228,31 +224,30 @@ const closeModal = () => {
 // 保存地址
 const saveAddress = () => {
   // 表单验证
-  if (!form.value.name || !form.value.phone || !form.value.province || !form.value.city || !form.value.district || !form.value.detail) {
+  if (!form.value.consignee || !form.value.phone || !form.value.province || !form.value.city || !form.value.county || !form.value.detailAddress) {
     alert('请填写完整地址信息');
     return;
   }
 
   // 如果设置为默认地址，需要将其他地址设为非默认
   if (form.value.isDefault) {
-    addressList.value.forEach(item => {
+    addressStore.addressList.forEach(item => {
       item.isDefault = false;
     });
   }
 
   // 新增地址
   if (editingIndex.value === -1) {
-    addressList.value.push({
-      id: Date.now(), // 简单生成唯一ID
+    addressStore.addAddress({
       ...form.value
     });
   }
   // 编辑地址
   else {
-    addressList.value[editingIndex.value] = {
-      ...addressList.value[editingIndex.value],
+    addressStore.updateAddress(editingIndex.value, {
+      ...addressStore.addressList[editingIndex.value],
       ...form.value
-    };
+    });
   }
 
   // 关闭模态框
@@ -274,6 +269,20 @@ const saveAddress = () => {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f8f9fa;
+}
+
+.custom-navbar {
+  --td-navbar-bg-color: #0052d9;
+  --td-navbar-color: #fff;
+  --td-navbar-height: 60px;
+}
+
+.loading {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  margin-top: -100px;
 }
 
 /* 地址卡片样式 */
@@ -312,7 +321,7 @@ body {
   margin-bottom: 12px;
 }
 
-.name {
+.consignee {
   font-weight: 500;
   font-size: 18px;
   color: #333;
@@ -332,7 +341,7 @@ body {
   border-radius: 100px;
 }
 
-.address-detail {
+.address-detailAddress {
   color: #666;
   margin-bottom: 0;
 }
@@ -346,8 +355,6 @@ body {
 }
 
 .action-btn {
-  background: none;
-  border: none;
   cursor: pointer;
   font-size: 14px;
   padding: 6px 10px;
@@ -367,14 +374,17 @@ body {
 }
 
 .edit-btn {
+  border: #0052d9 solid 1px;
   color: #0052d9;
 }
 
 .delete-btn {
+  border: #f44336 solid 1px;
   color: #f44336;
 }
 
 .default-btn {
+  border: #2ba471 solid 1px;
   color: #2ba471;
 }
 
