@@ -4,7 +4,7 @@ import { getAddressList, saveAddress } from '../request/addressApi'
 
 export const useAddressStore = defineStore('address', () => {
   const addressList = ref([])//地址列表
-
+  const defaultAddress = ref({})//默认地址
   // 初始化地址列表，调用getAddressList从接口获取地址列表
   async function initAddressList() {
     const response = await getAddressList();
@@ -41,10 +41,14 @@ export const useAddressStore = defineStore('address', () => {
 
   return {
     addressList,
+    defaultAddress,
     initAddressList,
     updateAddress,
     deleteAddress,
     addAddress,
     saveNewAddress
   }
-})
+},
+  {
+    persist: true
+  })

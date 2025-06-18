@@ -1,7 +1,7 @@
 import request from "../axios/request";
 import { useAuthStore } from '../store/userStore';
 const user = useAuthStore();
-console.log(user.user._id);
+
 export async function getAddressList() {
   try {
     const response = await request({

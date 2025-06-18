@@ -4,8 +4,7 @@ export async function bookDetail(id) {
   try {
     const response = await request({
       url: `/bookDetail/${id}`,
-      method: 'post', // 明确使用POST方法
-      data: { id: id } // 将id作为请求体数据传递
+      method: 'get', // 明确使用get方法
     });
     return response;
   } catch (error) {

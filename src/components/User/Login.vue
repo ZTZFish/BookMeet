@@ -367,8 +367,6 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-@import url('https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css');
-
 .page-container {
   position: relative;
   width: 100%;

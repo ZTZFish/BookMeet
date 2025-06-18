@@ -214,6 +214,7 @@ const setDefault = (index) => {
   });
   // 将当前地址设为默认
   addressStore.addressList[index].isDefault = true;
+  addressStore.defaultAddress = addressStore.addressList[index];
 }
 
 // 关闭模态框
@@ -234,6 +235,7 @@ const saveAddress = () => {
     addressStore.addressList.forEach(item => {
       item.isDefault = false;
     });
+    addressStore.defaultAddress = form.value;
   }
 
   // 新增地址
@@ -256,9 +258,6 @@ const saveAddress = () => {
 </script>
 
 <style lang="css" scoped>
-/* 引入字体图标 */
-@import url('https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css');
-
 /* 基础样式 */
 * {
   box-sizing: border-box;

@@ -1,53 +1,25 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount, onBeforeUnmount } from 'vue';
 import { useCartStore } from '../../store/cartStore';
-const cartList = ref([
-  {
-    id: 1,
-    image: 'https://img1.doubanio.com/view/subject/s/public/s35057308.jpg',
-    title: 'Vue.js 设计与实现',
-    author: 'TanStack',
-    price: 89.00,
-    count: 1
-  },
-  {
-    id: 2,
-    image: 'https://img1.doubanio.com/view/subject/s/public/s8958650.jpg',
-    title: 'JavaScript 高级程序设计',
-    author: 'Nicholas C. Zakas',
-    price: 69.00,
-    count: 1
-  },
-  {
-    id: 3,
-    image: 'https://img3.doubanio.com/view/subject/s/public/s28033372.jpg',
-    title: '你不知道的 JavaScript',
-    author: 'Kyle Simpson',
-    price: 59.00,
-    count: 1
-  },
-  {
-    id: 4,
-    image: 'https://img9.doubanio.com/view/subject/s/public/s3651235.jpg',
-    title: 'JavaScript 语言精粹',
-    author: 'Douglas Crockford',
-    price: 49.00,
-    count: 1
 
-  },
-])
+
+const cartStore = useCartStore();
+const editStatus = ref(false);
 
 const goBack = () => {
   window.history.back();
 }
 
-const countChange = (value, item) => {
-  item.count = value;
-  updateTotalPrice()
-}
-const updateGoodPrice = (item, value) => {
-  item.price = item.price * value;
+onBeforeMount(async () => {
+  await cartStore.initCartList();
+})
 
+onBeforeUnmount(() => {
+  cartStore.saveNewCartList();
+})
+
+const edit = () => {
+  editStatus.value = !editStatus.value;
 }
 
 </script>
@@ -55,11 +27,18 @@ const updateGoodPrice = (item, value) => {
 <template>
   <div>
     <div class="cart">
-      <t-navbar title="购物车" :fixed="true" left-arrow class="custom-navbar" style="z-index:99999" @left-click="goBack" />
+      <t-navbar title="购物车" :fixed="true" left-arrow class="custom-navbar" style="z-index:99999" @left-click="goBack"
+        @right-click="edit()">
+        <template #right>
+          <i v-show="!editStatus" class="fa fa-gears" style="width: 30px;font-size: 20px;"></i>
+          <span v-show="!editStatus" style="font-size: 16px;font-weight: 600;">编辑</span>
+          <span v-show="editStatus" style="font-size: 16px;font-weight: 600;">完成</span>
+        </template>
+      </t-navbar>
       <div class="goods-container">
-        <div v-for="item in cartList" :key="item.id" class="good" label="item.id">
+        <div v-for="item in cartStore.cartList" :key="item.id" class="good" label="item.id">
           <label style="width: 40px;display: flex;align-items: center;justify-content: center;">
-            <input type="checkbox"
+            <input type="checkbox" v-model="item.checked"
               style="width: 20px;height: 20px;border-radius: 50%;appearance: none;border: 1px solid gray;">
           </label>
           <div class="content" @click.stop>
@@ -74,10 +53,13 @@ const updateGoodPrice = (item, value) => {
                 <p>{{ item.author }}</p>
               </div>
               <div class="price">
-                <p v-show="item.count == 1">¥{{ item.price }}</p>
-                <p v-show="item.count > 1">¥{{ item.price * item.count }}</p>
-                <t-stepper theme="filled" style="margin-left: auto;" @change.stop="countChange(value, item)"
-                  v-model:value="item.count" :min="1" />
+                <p>¥{{ (Number(item.price) * item.count).toFixed(2) }}</p>
+                <t-stepper v-show="!editStatus" theme="filled" style="margin-left: auto;" v-model:value="item.count"
+                  :min="1" />
+                <t-button v-show="editStatus" theme="danger" variant="outline" style="height: 30px;"
+                  @click="cartStore.delGood(item.bookId)">
+                  <i class="fa fa-trash" style="font-size: 16px;"></i>
+                  删除</t-button>
               </div>
             </div>
             <div class="go">
@@ -89,6 +71,25 @@ const updateGoodPrice = (item, value) => {
               </svg>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="settle">
+        <div class="total">
+          <input type="checkbox" v-model="cartStore.allChecked"
+            style="width: 20px;height: 20px;border-radius: 50%;appearance: none;border: 1px solid gray;margin-right: 10px;">
+          <span style="font-size: 16px;"><b>全选</b></span>
+        </div>
+        <div class="pay" v-show="!editStatus">
+          <span style="font-size: 16px;"><b>总计</b></span>
+          <span v-show="cartStore.totalPrice !== 0">：</span>
+          <span v-show="cartStore.totalPrice !== 0" class="total-price">￥{{ cartStore.totalPrice.toFixed(2) }}</span>
+          <t-button size="large" theme="primary" style="width: 100px;margin-left: 10px;">去结算</t-button>
+        </div>
+        <div v-show="editStatus" class="del">
+          <t-button theme="danger" variant="outline" style="height: 48px;" @click="cartStore.delCheckedGood">
+            <i class="fa fa-trash" style="font-size: 16px;"></i>
+            删除选中
+          </t-button>
         </div>
       </div>
     </div>
@@ -126,20 +127,6 @@ const updateGoodPrice = (item, value) => {
       background-color: #fff;
       border-radius: 10px;
 
-      input[type="checkbox"]:checked {
-        background-color: #2196F3;
-        border-color: #2196F3;
-      }
-
-      input[type="checkbox"]:checked::after {
-        content: "✓";
-        display: block;
-        color: white;
-        text-align: center;
-        line-height: 18px;
-        font-weight: bold;
-      }
-
       .content {
         width: 100%;
         height: 100%;
@@ -167,6 +154,7 @@ const updateGoodPrice = (item, value) => {
           align-items: start;
 
           .title {
+            margin-top: 5px;
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 10px;
@@ -191,10 +179,64 @@ const updateGoodPrice = (item, value) => {
         }
 
         .go {
+          margin-top: 8px;
           align-self: start;
         }
       }
     }
+  }
+
+  .settle {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .total {
+      height: 100%;
+      line-height: 70px;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .pay {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      margin-right: 10px;
+
+      .total-price {
+        font-size: 20px;
+        font-weight: 600;
+        color: #ff6600;
+      }
+    }
+
+    .del {
+      margin-left: auto;
+      margin-right: 10px;
+    }
+  }
+
+
+
+  input[type="checkbox"]:checked {
+    background-color: #0052d9;
+    border-color: #0052d9;
+  }
+
+  input[type="checkbox"]:checked::after {
+    content: "✓";
+    display: block;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
   }
 }
 </style>

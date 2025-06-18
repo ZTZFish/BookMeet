@@ -5,25 +5,28 @@ import BookInfo from './BookInfo.vue';
 import MarketInfo from './MarketInfo.vue';
 import BookComments from './BookComments.vue';
 import Handle from './Handle.vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, provide } from 'vue';
 import { bookDetail } from '../../request/bookApi'; // 注意这里是bookDetails，不是bookDetail
 import { useRoute } from 'vue-router'; // 引入useRoute
+import { useAuthStore } from '../../store/userStore';
 
 // 定义一个函数，用于获取书籍详情
 const route = useRoute(); // 获取当前路由实例
+let book = ref(null);
 
-onBeforeMount(() => {
-  fetchBook();
+
+onBeforeMount(async () => {
+  await fetchBook();
+  const user = useAuthStore();
 });
 //定义一个变量，用于存储书籍详情
-let book = ref(null);
+
 async function fetchBook() {
   try {
     const bookId = route.params.bookId; // 从路由参数中获取bookId
     if (bookId) {
-      const { data } = await bookDetail(Number(bookId)); // 确保bookId是数字类型
+      const { data } = await bookDetail(String(bookId)); // 确保bookId是字符串类型
       book.value = data.book; // 将书籍详情存储在book变量中
-      console.log(book.value);
     } else {
       console.warn('找不到ID');
     }
@@ -31,6 +34,7 @@ async function fetchBook() {
     console.error('Failed to fetch book:', error);
   }
 }
+provide('book', book);
 
 </script>
 
@@ -52,7 +56,7 @@ async function fetchBook() {
       <MarketInfo :market="book['market']" />
     </div>
     <div class="handle" style="background-color: #fff;position: fixed;bottom: 0;width: 100%;height: 70px;">
-      <Handle />
+      <Handle :bookId="book._id" />
     </div>
   </div>
   <div v-else class="loading"><t-loading size="30px" theme="spinner" /></div>

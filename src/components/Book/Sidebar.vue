@@ -44,7 +44,7 @@ const onSideBarChange = (value: TdSideBarProps['value']) => {
 };
 
 interface Book {
-  id: number,
+  _id: string,
   name?: string,
   author?: string,
   price?: number,
@@ -58,7 +58,7 @@ interface Book {
 
 let bookList: Book[] = [
   {
-    id: 1,
+    _id: '684551845629b01e1d378035',
     name: '红楼梦',
     author: '曹雪芹',
     price: 59.70,
@@ -70,7 +70,7 @@ let bookList: Book[] = [
     publishingTiem: '1996年'
   },
   {
-    id: 2,
+    _id: '684554da5629b01e1d378037',
     name: '活着',
     author: '余华',
     price: 28.00,
@@ -82,7 +82,7 @@ let bookList: Book[] = [
     publishingTiem: '2012年'
   },
   {
-    id: 3,
+    _id: '684556955629b01e1d378039',
     name: '哈利·波特',
     author: 'J.K.罗琳',
     price: 498.00,
@@ -96,7 +96,7 @@ let bookList: Book[] = [
 
 const router = useRouter();
 
-const goToBookDetails = (bookId: number) => {
+const goToBookDetails = (bookId: string) => {
   router.push({
     name: 'Bookdetails',
     params: { bookId: bookId },
@@ -117,7 +117,7 @@ const goToBookDetails = (bookId: number) => {
         <div v-for="(item, index) in data.categories" :key="index" class="section">
           <div class="title">{{ item.label }}</div>
           <ul class="show-books">
-            <li v-for="book in bookList" :key="book.id" @click="goToBookDetails(book.id)" style="cursor: pointer;">
+            <li v-for="book in bookList" :key="book._id" @click="goToBookDetails(book._id)" style="cursor: pointer;">
               <BookCard>
                 <template #card-image>
                   <div class="book-image">
@@ -159,7 +159,7 @@ const goToBookDetails = (bookId: number) => {
 <style lang="less" scoped>
 .side-bar-wrapper {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 86px - 48px);
   background-color: var(--bg-color-demo, #fff);
   overflow: hidden;
 
