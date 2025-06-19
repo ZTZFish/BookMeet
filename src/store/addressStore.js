@@ -31,7 +31,6 @@ export const useAddressStore = defineStore('address', () => {
   //保存地址
   async function saveNewAddress() {
     try {
-      console.log('退出');
       const response = await saveAddress(addressList.value);
     } catch (error) {
       console.error('Error fetching book details:', error);

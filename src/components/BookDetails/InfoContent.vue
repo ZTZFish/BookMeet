@@ -34,7 +34,7 @@ const props = defineProps({
       </div>
       <div class="book-count" v-if="props.handle == 'handle-buy'">
         <span style="font-size: 1em;">数量：</span>
-        <t-stepper theme="filled" default-value="1" min="1" />
+        <t-stepper theme="filled" default-value="1" :min="1" />
       </div>
     </div>
   </div>

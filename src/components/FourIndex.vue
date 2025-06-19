@@ -16,7 +16,7 @@ import Tabbar from './Tabbar.vue';
 import { ref } from 'vue';
 
 //缓存组件
-const keepComponent = ref(['Index', 'Book', 'Message', 'User']);
+const keepComponent = ref(['Index', 'Book', 'Message', 'User', 'BookDetails']);
 
 //Tabbar切换
 const router = useRouter();

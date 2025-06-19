@@ -29,7 +29,8 @@ const routes = [
   {
     path: '/bookdetails/:bookId',
     name: 'Bookdetails',
-    component: () => import('../components/BookDetails/BookDetails.vue')
+    component: () => import('../components/BookDetails/BookDetails.vue'),
+    meta: { keepAlive: true }
   },
   {
     path: '/login',
